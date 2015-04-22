@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data>
+        
+        <!-- Sequence type for sale order -->
+        <record id="sale_order_sequence_type"
+            model="ir.sequence.type">
+            <field name="name">sale order Sequence type</field>
+            <field name="code">saleorder.code</field>
+        </record>
+        
+        <record id="sale_order_seqeunce" model="ir.sequence">
+            <field name="name">Sale order Sequence</field>
+            <field name="code">saleorder.code</field>
+            <field name="padding">4</field>
+            <field name="prefix">SO/%(month)s/%(year)s/</field>
+            <field name="implementation">no_gap</field>
+            <field name="number_increment">1</field>
+        </record>
+    </data>
+</openerp>

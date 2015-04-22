@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    
+    <data>
+        
+        <!-- Form view for student result summary -->
+        <record id="student_result_summary_form" model="ir.ui.view">
+            <field name="name">student.result.summary.form</field>
+            <field name="model">student.result.summary</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form>
+                    <field name="subject_id"/>
+                    <group colspan="4">
+                        <separator string="Enter Range of Marks for selected subject" colspan="4"/>
+                        <field name="mark" nolabel="1"/>
+                        <field name="mark_2" nolabel="1"/>
+                    </group>
+                    
+                    <button name="get_student_results" string="Get Result Info." type="object" />
+                    <button special="cancel" string="Cancel"/>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Action for student result summary-->
+        <record id="action_student_result_summary" model="ir.actions.act_window">
+            <field name="name">Student Result Details</field>
+            <field name="res_model">student.result.summary</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>    
+        
+        <!-- Menuitems for Reports-->
+        <menuitem id="main_report_menu_id" parent="main_school_menu" name="Report" sequence="99"/>
+        <menuitem id="student_summary_menu" parent="main_report_menu_id" action="action_student_result_summary"/>
+        
+    </data>
+    
+</openerp>

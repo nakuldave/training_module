@@ -1,0 +1,7 @@
+﻿[[repeatIn(objects,'o')]
+
+Student Name : [[o.name]]
+
+Last Name    : [[o.lname]]
+
+Date of Birth: [[o.dob]]

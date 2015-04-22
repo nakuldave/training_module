@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data>
+		<!--         Root Menu -->
+        <menuitem id = "menu_school_root" name="reschool"/>
+        <menuitem id = "menu_school_parent" parent = "menu_school_root" name="reschool"/>
+
+        <!-- 		Re-School Management     tree view -->
+        <record id="view_student_tree" model="ir.ui.view">
+            <field name = "name">student.student.tree</field>
+            <field name = "model">student.student</field>
+            <field name="type">tree</field>
+            <field name = "arch" type = "xml">
+                <tree string="School Management">
+                    <field name="name"/>
+                    <field name="dob"/>
+                    <field name="age"/>
+                    <field name="standard"/>
+                </tree>
+           </field>
+        </record>
+        
+
+        <!-- 		School Management Action -->
+        <record id = "school_action" model="ir.actions.act_window">
+            <field name = "name">Student</field>
+            <field name = "res_model">student.student</field>
+            <field name = "view_type">form</field>
+            <field name = "view_mode">tree,form</field>
+        </record>
+        <menuitem action="school_action" id="menu_school_action" parent="menu_school_parent" name="School"/>
+
+	</data>
+</openerp>

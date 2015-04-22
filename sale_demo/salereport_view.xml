@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        
+<record id="sale_information_webkit_report_header" model="ir.header_webkit">
+            <field name="footer_html"><![CDATA[
+                <html>
+                    <body>
+                        <h3> Serpent Consulting Services</h3>
+                    </body>
+                </html>
+            ]]></field>
+            
+            <field name="orientation">Portrait</field>
+            <field name="format">A4</field>
+            <field name="html"><![CDATA[
+<html>
+   <head>
+       <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+       <script>
+           function subst() {
+           var vars={};
+           var x=document.location.search.substring(1).split('&');
+           for(var i in x) {var z=x[i].split('=',2);vars[z[0]] = unescape(z[1]);}
+           var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
+           for(var i in x) {
+           var y = document.getElementsByClassName(x[i]);
+           for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
+               }
+           }
+
+       </script>
+       <style type="text/css">
+           ${css}
+       </style>
+   </head>
+   <body style="border:0; " onload="subst()">
+     </body>
+</html>
+]]>
+
+            </field>
+            <field eval="6.0" name="margin_top"/>
+            <field eval="10.0" name="margin_bottom"/>
+            <field name="name">Sale Information Webkit header</field>
+        </record>
+
+        <report
+            auto="False"
+            id="sale_info_webkit_report"
+            model="sale.sale"
+            name="sale.info.report.webkit"
+            string="Sale Information Webkit"
+            report_type="webkit"
+            file="sale_demo/report/sale_info.mako"
+            webkit_header="sale_information_webkit_report_header"
+            header="True"
+           />
+
+        <report id="report_sale_info"
+                model="sale.sale"
+                name="sale_info_rml"
+                rml="sale_demo/report/sale_info.rml"
+                string="sale Information"
+                />
+    </data>
+</openerp>

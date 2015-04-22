@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data>
+		<!--         Root Menu -->
+        <menuitem id = "menu_school_root" name="school Management"/>
+        <menuitem id = "menu_school_parent" parent = "menu_school_root" name="school Management"/>
+
+        <!-- 		School Management     tree view -->
+        <record id="view_school_tree" model="ir.ui.view">
+            <field name = "name">school.school.tree</field>
+            <field name = "model">school.school</field>
+            <field name="type">tree</field>
+            <field name = "arch" type = "xml">
+                <tree string="School Management">
+                    <field name="name"/>
+                    <field name="contact"/>
+                </tree>
+           </field>
+        </record>
+        
+		<!-- 		School Management Form View -->
+		<record id="view_school_form" model="ir.ui.view">
+		    <field name="name">school.school.form</field>
+			<field name="model">school.school</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="School Management" version="7.0">
+				   <sheet>
+						    <group colspan="4" col="4">
+					        	<field name="name" required='1'/>
+					        	<field name="established"/>
+					        	<field name="code"/>
+					        	<field name="contact"/>
+						    </group>
+					    
+					        <notebook>
+					            <page string="Student">
+					        		<field name="student_ids" readonly="1"/>
+					        	</page>
+					        </notebook>
+					
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+        <!-- 		School Management Action -->
+        <record id = "school_action" model="ir.actions.act_window">
+            <field name = "name">School</field>
+            <field name = "res_model">school.school</field>
+            <field name = "view_type">form</field>
+            <field name = "view_mode">tree,form</field>
+        </record>
+		<!--         School Menu -->        
+        <menuitem action="school_action" id="menu_school_action" parent="menu_school_parent" name="School"/>
+        
+		<!--         Student Tree View -->
+		
+        <record id="view_student_tree" model="ir.ui.view">
+            <field name = "name">student.student.tree</field>
+            <field name = "model">student.student</field>
+            <field name="type">tree</field>
+            <field name = "arch" type = "xml">
+                <tree string="Student">
+                    <field name="name"/>
+                    <field name="lname"/>
+                    <field name="dob"/>
+                </tree>
+           </field>
+        </record>
+        
+        <!--  Student Form view -->
+        
+        <record id="view_student_form" model="ir.ui.view">
+		    <field name="name">student.student.form</field>
+			<field name="model">student.student</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Student" version="7.0">
+				    <header>
+                  		<button name="set_in_process" states="draft" type="object" string="In Progress"/>
+	                    <button name="set_to_approve" states="process" type="object" string="Done"/>
+	                    <button name="set_to_cancel" states="process,approve" type="object" string="Rejected"/>
+	                    <button name="set_to_draft" states="cancel" type="object" string="Set to Draft"/>
+	                    <field name="state" widget="statusbar"/>
+                    </header>
+				   <sheet>
+					    <group colspan="4" col="4">
+					        <field name="name" required='1'/>
+					        <field name="lname"/>
+					        <field name="full_name"/> 
+					        <field name="dob" on_change="get_admissiondate(dob)"/>
+					        <field name="admission_date"/>
+					        <field name="contact"/>
+					        <field name="school_id"/>
+					        <field name="customer_id" on_change="get_address(customer_id)"/>
+					        <label for="street" string="Address"/>
+                            <div>
+                                <field name="street" placeholder="Street..."/>
+                                <field name="street2" placeholder="street2..."/>
+                                <div class="address_format">
+                                    <field name="city" placeholder="City..." style="width: 40%%"/>
+                                    <field name="state_id" class="oe_no_button" placeholder="State..." style="width: 37%%" options='{"no_open": True}' />
+                                    <field name="zip" placeholder="ZIP..." style="width: 20%%"/>
+                                </div>
+                                <field name="country_id" placeholder="Country..." class="oe_no_button" options='{"no_open": True}'/>
+                            </div>
+					    </group>
+					    <notebook>
+					            <page string="Result">
+					        		<field name="student_ids" readonly="1"/>
+					        	</page>
+					    </notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		
+        <!-- Student Action view -->
+
+        <record id = "student_action" model="ir.actions.act_window">
+            <field name = "name">Student</field>
+            <field name = "res_model">student.student</field>
+            <field name = "view_type">form</field>
+            <field name = "view_mode">tree,form</field>
+        </record>
+
+        <!-- menu items for student -->
+
+        <menuitem action="student_action" id="menu_student_action" parent="menu_school_parent" name="Student"/>
+
+        <!-- 		Result     tree view -->
+        <record id="view_result_tree" model="ir.ui.view">
+            <field name = "name">result</field>
+            <field name = "model">result.result</field>
+            <field name="type">tree</field>
+            <field name = "arch" type = "xml">
+                <tree string="Result">
+                    <field name="subject_name"/>
+                    <field name="passing_marks"/>
+                    <field name="obtained_marks"/>
+                    <field name="final_result"/>
+                </tree>
+           </field>
+        </record>
+
+		<!-- 		Result   form view -->
+		<record id="view_result_form" model="ir.ui.view">
+		    <field name="name">Result</field>
+			<field name="model">result.result</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Result" version="7.0">
+				   <sheet>
+					    <group colspan="4" col="4">
+					        <field name="name"/>
+					        <field name="result_id" on_change="get_customername(result_id)"/>
+					        <field name="subject_name" required='1'/>
+					        <field name="obtained_marks"/>
+					        <field name="maximum_marks" required='1'/>
+					        <field name="passing_marks"/>
+					        <field name="final_result"/>
+					        <field name="customer_id"/>
+					    </group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+        <!-- 		 Result Action -->
+        <record id = "result_action" model="ir.actions.act_window">
+            <field name = "name">Result</field>
+            <field name = "res_model">result.result</field>
+            <field name = "view_type">form</field>
+            <field name = "view_mode">tree,form</field>
+        </record>
+		<!--         Result Menu -->
+        <menuitem action="result_action" id="menu_result_action" parent="menu_school_parent" name="Result"/>
+
+    </data>
+</openerp>

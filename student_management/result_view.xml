@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data>
+        
+        <!-- Student Result Information form view -->
+        <record id="student_result_form_view" model="ir.ui.view">
+            <field name="name">student.result.form.view</field>
+            <field name="model">student.result</field>
+            <field name="type">form</field>
+            <field name="arch"  type="xml">
+                <form>
+                    <group colspan="4" col="4">
+                        <field name="stream_id"/>
+                        <field name="student_id" domain="[('stream_id','=',stream_id)]"/>
+                        <field name="year_id"/>
+                    </group>
+                    <newline/>
+                    <separator string="Subject Information" colspan="4"/>
+                    <field name="subjects_line" nolabel="1">
+                        <tree editable="top">
+                            <field name="subject_id"/>
+                            <field name="min_marks"/>
+                            <field name="obtain_marks"/>
+                            <field name="max_marks"/>
+                            <field name="grade"/>
+                        </tree>    
+                    </field> 
+                </form>
+            </field>
+         </record>
+         
+         <!-- Student Result tree view information -->
+         <record id="student_result_tree_view" model="ir.ui.view">
+            <field name="name">student.result.tree.view</field>
+            <field name="model">student.result</field>
+            <field name="type">tree</field>
+            <field name="arch"  type="xml">
+                <tree>
+                    <field name="stream_id"/>
+                    <field name="student_id"/>
+                    <field name="year_id"/>
+                </tree>
+            </field>
+         </record>
+    
+    <!-- Action for Student Result -->
+    
+    <record id="action_student_result" model="ir.actions.act_window">
+        <field name="name">Student Result</field>
+        <field name="res_model">student.result</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help">This aciton will triger the tree view of student result</field>
+    </record>
+
+    <!-- -->    
+    <menuitem id="result_main_menu" parent="main_school_menu" name="Result Informations"/>
+    <menuitem id="student_result_menu_id" action="action_student_result" parent="result_main_menu"/>
+        
+        
+        
+     <!--Action for Subject Model -->
+        <record id="action_subject_id" model="ir.actions.act_window">
+            <field name="name">Subject</field>
+            <field name="res_model">subject.subject</field>
+        </record>
+        
+        <!-- Menuitem for Subject -->
+        <menuitem id="menu_subject_id" action="action_subject_id" parent="main_configuration_id"/>
+        
+    </data>    
+</openerp>

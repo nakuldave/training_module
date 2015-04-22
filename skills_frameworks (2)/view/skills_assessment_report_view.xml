@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<template id="skill_assessment_report_template_id">
+			<t t-call="skills_frameworks.external_layout_extended">
+				<div class="page">
+				<t t-foreach="docs" t-as="o">
+						<div class="main">
+							<div class="row">
+								<div class="col-xs-12">
+									<div class="col-xs-12 text-center" >
+										<strong><h3>SKILLS ASSESSMENT REPORT</h3></strong>
+									</div>
+									<div class="col-xs-8 text-left mb16">
+										<strong>Name :</strong> <span t-field="o.name"/> <br/>
+										<strong>Position :</strong> <span t-field="o.job_id"/>
+									</div>
+								</div>
+							</div>
+								<span t-if="o.self_assessed_skills">
+									<div class="col-xs-12">
+										<div class="col-xs-4 mb8">
+											<strong>Self Assessed Skills</strong>
+										</div>
+										<table class="table table-bordered">
+											<thead style="background-color:lightgrey">
+												<tr>
+													<th class="text-center"><strong>No</strong></th>
+													<th class="text-center"><strong>Framework Name</strong></th>
+													<th class="text-center"><strong>Skill Code</strong></th>
+													<th class="text-center"><strong>Competency Level</strong></th>
+													<th class="text-center"><strong>Supporting Evidence</strong></th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr t-foreach="o.self_assessed_skills" t-as="sas">
+													<td class="text-center">
+														<span t-esc="get_index()"/>
+													</td>
+													<td class="text-center">
+														<span t-field="sas.framework_name"/>
+													</td>
+													<td class="text-center">
+														<span t-field="sas.skillcode"/>
+													</td>
+													<td class="text-center">
+														<span t-field="sas.skilllevel"/>
+													</td>
+													<td class="text-center">
+														<span t-field="sas.evidence"/>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</span>
+							
+								<span t-if="o.formally_assessed_skills">
+									<div class="col-xs-12">
+										<div class="col-xs-4 mb8">
+											<strong>Formally Assessed Skills</strong>
+										</div>
+										<table class="table table-bordered">
+											<thead style="background-color:lightgrey">
+												<tr>
+													<th class="text-center"><strong>No</strong></th>
+													<th class="text-center">Framework Name</th>
+													<th class="text-center"><strong>Skill Code</strong></th>
+													<th class="text-center"><strong>Competency Level</strong></th>
+													<th class="text-center"><strong>Date Awarded</strong></th>
+													<th class="text-center"><strong>Date Expires</strong></th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr t-foreach="o.formally_assessed_skills" t-as="fas">
+													<td class="text-center">
+														<span t-esc="get_index1()"/>
+													</td>
+													<td class="text-center">
+														<span t-field="fas.framework_name"/>
+													</td>
+													<td class="text-center">
+														<span t-field="fas.skillcode"/>
+													</td>
+													<td class="text-center">
+														<span t-field="fas.skilllevel"/>
+													</td>
+													<td class="text-center">
+														<span t-field="fas.date_awarded"/>
+													</td>
+													<td class="text-center">
+														<span t-field="fas.date_expires"/>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</span>
+						</div>
+				</t>
+				</div>
+			</t>	
+		</template>
+	</data>
+</openerp>
+

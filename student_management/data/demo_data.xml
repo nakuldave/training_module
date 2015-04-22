@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data>
+        <record id="eng_sub_1" model="subject.subject">
+            <field name="code">ENG</field>
+            <field name="name">English</field>
+        </record>
+        <record id="eng_sub_2" model="subject.subject">
+            <field name="code">Souda</field>
+            <field name="name">Arabic</field>
+        </record>
+        <record id="eng_sub_3" model="subject.subject">
+            <field name="code">Souda-2</field>
+            <field name="name">Gujarati</field>
+        </record>
+        <record id="eng_sub_4" model="subject.subject">
+            <field name="code">Souda-3</field>
+            <field name="name">Sanskrit</field>
+        </record>
+        
+    </data>
+</openerp>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data>
+        <record id="res_partner_inherit_view" model="ir.ui.view">
+            <field name="name">res.partner.inherit.form.view</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <field name="ref" position="attributes">
+                    <attribute name="required">1</attribute>
+                    <attribute name="string">Ref No</attribute>
+                </field>
+            </field>
+        </record>    
+    </data>
+</openerp>

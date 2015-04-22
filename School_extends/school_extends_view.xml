@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data>
+        <!-- 		School_extends     form view -->
+        <record id="view_school_extends_form" model="ir.ui.view">
+            <field name = "name">schoolextends.schoolextends.form</field>
+            <field name = "model">student.student</field>
+            <field name="inherit_id" ref="school_management.view_student_form"/>
+            <field name = "arch" type = "xml">
+                    <xpath expr="/form/sheet/group/field[@name='contact']" position="after">
+                    	<field name="gender"/>
+              	    </xpath>
+           </field>
+        </record>
+        
+        <!-- 		School_extends     form view -->
+        <record id="view_school_extends_sale_form" model="ir.ui.view">
+            <field name = "name">schoolextendssale.form</field>
+            <field name = "model">student.student</field>
+            <field name="inherit_id" ref="school_management.view_student_form"/>
+            <field name = "arch" type = "xml">
+                    <xpath expr="/form/sheet/group/field[@name='name']" position="before">
+                    	<field name="titel"/>
+              	    </xpath>
+           </field>
+        </record>
+        
+<!-- 		Sale/product_category     form view -->
+        <record id="view_product_category_extends_form" model="ir.ui.view">
+            <field name = "name">Product Category</field>
+            <field name = "model">product.demo.category</field>
+            <field name="inherit_id" ref="sale_demo.view_uom_form"/>
+            <field name = "arch" type = "xml">
+                    <xpath expr="/form/sheet/group/field[@name='code']" position="after">
+                    	<field name="parent_category"/>
+              	    </xpath>
+           </field>
+        </record>
+
+   </data>
+</openerp>

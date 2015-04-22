@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+		
+		
+        <record id="view_create_user" model="ir.ui.view">
+            <field name="name">res.users.form.new</field>
+            <field name="model">res.users</field>
+            <field name="arch" type="xml">
+                <form string="Create User Wizard" version="7.0">
+                  <header>
+                    <button string="Create User" name="create_user_button" type="object" class="oe_highlight"/>
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                  </header>
+                	<field name="id" invisible="1"/>
+                    <group>
+                            <field name="company_id" string="Primary Client"/>
+                            <field name="role_type_id" domain="[('is_true','=',True)]"/>
+                            <field name="name" string="First Name"/>
+                            <field name="l_name"/>
+                            <field name="u_mail" />
+                            <field name="login"/>
+                            <field name="password"/>
+                   <!--     <button name="button_redirect" string="Open User Setting" type="object" class="oe_highlight"/>   -->
+                            
+	                </group>
+                  
+                </form>
+            </field>
+        </record>
+
+        <record id="action_create_user" model="ir.actions.act_window">
+            <field name="name">Create User</field>
+            <field name="res_model">res.users</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="view_id" ref="view_create_user"/>
+            <field name="target">new</field>
+        </record>
+      	
+      
+      	
+      	
+      	
+<!--       	 <record id="action_res_users_view3" model="ir.actions.act_window.view"> -->
+<!--             <field eval="10" name="sequence"/> -->
+<!--             <field name="view_mode">tree</field> -->
+<!--             <field name="view_id" ref="base.view_users_tree"/> -->
+<!--             <field name="act_window_id" ref="action_create_user"/> -->
+<!--         </record> -->
+<!--         <record id="action_res_users_view4" model="ir.actions.act_window.view"> -->
+<!--             <field eval="20" name="sequence"/> -->
+<!--             <field name="view_mode">form</field> -->
+<!--             <field name="view_id" ref="view_create_user"/> -->
+<!--             <field name="act_window_id" ref="action_create_user"/> -->
+<!--         </record> -->
+      	
+        <menuitem
+            action="action_create_user"
+            id="menu_action_create_user"
+            parent="base.menu_users"
+            sequence="3"
+            
+            />
+
+    </data>
+</openerp>

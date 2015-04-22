@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data>
+        
+        <!-- Sequence type for student registration -->
+        <record id="student_student_sequence_type" 
+            model="ir.sequence.type">
+            <field name="name">Studuent Sequence type</field>
+            <field name="code">student.student.code</field>
+        </record>
+        
+        <record id="student_seqeunce" model="ir.sequence">
+            <field name="name">Student Sequence</field>
+            <field name="code">student.student.code</field>
+            <field name="padding">4</field>
+            <field name="prefix">OX/%(month)s/%(year)s/</field>
+            <field name="implementation">no_gap</field>
+            <field name="number_increment">1</field>
+        </record>
+    </data>
+</openerp>

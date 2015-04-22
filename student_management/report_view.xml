@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    
+    <data>
+        
+        <record id="sale_order_webkit_report_header" model="ir.header_webkit">
+            <field name="footer_html"><![CDATA[
+                <html>
+                    <body>
+                        <h3> Serpent Consulting Services</h3>
+                    </body>
+                </html>
+            ]]></field>
+            
+            <field name="orientation">Portrait</field>
+            <field name="format">A4</field>
+            <field name="html"><![CDATA[
+<html>
+   <head>
+       <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+       <script>
+           function subst() {
+           var vars={};
+           var x=document.location.search.substring(1).split('&');
+           for(var i in x) {var z=x[i].split('=',2);vars[z[0]] = unescape(z[1]);}
+           var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
+           for(var i in x) {
+           var y = document.getElementsByClassName(x[i]);
+           for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
+               }
+           }
+       </script>
+       <style type="text/css">
+           ${css}
+       </style>
+   </head>
+   <body style="border:0; " onload="subst()">
+     </body>
+</html>]]>
+            </field>
+            <field eval="5.0" name="margin_top"/>
+            <field eval="5.0" name="margin_bottom"/>
+            <field name="css"><![CDATA[
+
+
+.cell{
+    border-spacing: 0;
+    border-collapse: collapse;
+    border-style:solid;
+    border: 1px solid #000000;
+    font-size:10px;
+    text-align:center;
+}
+
+tr.table_parent_data{
+    font-family: Helvetica-Bold;
+    font-size: 10px;
+    caption-side: top;
+    font-weight: bold;
+    text-align:center;
+    height:40px;
+}
+
+tr.table_child_data{
+    font-family: Helvetica;
+    font-size: 10px;
+    caption-side: top;
+    height:40px;
+}
+                 
+tr.table_child_data_extended{
+    font-family: Helvetica;
+    font-size: 12px;
+    caption-side: top;
+}
+            
+table {
+  display: table;
+  width: 100%;
+}
+
+table thead {
+  display: table-header-group;
+}
+
+table tbody {
+  display: table-row-group;
+}
+
+table tfoot {
+  display: table-footer-group;
+}
+
+table tr {
+  display: table-row;
+  height: auto;
+}
+
+table th,
+table td {
+  display: table-cell;
+  overflow: visible;
+}
+
+table th,
+table td {
+  height: 1px; /* Do the trick to make div.nobrk fill td height */
+}
+
+table tr.singlecell td,
+table tr.singlecell th {
+  height: auto; /* Reset trick for a full row td */
+}
+
+.nobrk {
+  page-break-inside: avoid;
+  orphans: 10;
+  widows: 10;
+  position: relative;
+  margin: -1px 0 0 -1px;
+  padding: 4px 5px;
+  min-height: 14px;
+  line-height: 14px;
+  height: 40px;
+}
+
+table tbody td .nobrk {
+  min-height: 28px;
+}
+
+]]>
+            </field>
+            
+            <field name="name">Sale Order WEbkit header</field>
+        </record>
+        
+    </data>
+    
+    <data>
+        
+        <report
+            id="student_info_report"
+            model="student.student"
+            name="student.info.rep"
+            string="Student Information"
+            rml="student_management/report/student_info.rml"
+            header="False"
+            />  
+            
+        <report
+            id="sale_order_info_report"
+            model="sale.order"
+            name="sale.order.rep"
+            string="My Sale Order"
+            rml="student_management/report/sale_order_info.rml"
+            header="False"
+            />
+                
+        <report
+            id="sale_order_webkit_report"
+            model="sale.order"
+            name="sale.order.rep.webkit"
+            string="Sale Order Webkit"
+            report_type="webkit"
+            file="student_management/report/order.mako"
+            webkit_header="sale_order_webkit_report_header"
+            />
+    </data>
+    
+</openerp>

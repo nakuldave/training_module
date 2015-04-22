@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_skillsframework_employeeskills_user,skillsframework.employeeskills.user,model_skillsframework_employeeskills,base.group_hr_user,1,0,0,0
+access_skillsframework_employeeskills_manager,skillsframework.employeeskills.manager,model_skillsframework_employeeskills,base.group_hr_user,1,1,1,1

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data>
+        
+        <!-- Workflow creation -->
+        <record id="wkf_student_leave" model="workflow">
+            <field name="name">student.leave.basic</field>
+            <field name="osv">leave.leave</field>
+            <field name="on_create">True</field>
+        </record>
+        
+        <!-- Activities -->
+        <record id="act_draft" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_student_leave"/>
+            <field name="flow_start">True</field>
+            <field name="name">draft</field>
+        </record>
+        
+        <record id="action_leave_req" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_student_leave"/>
+            <field name="name">request</field>
+            <field name="kind">function</field>
+            <field name="action">set_to_request()</field>
+        </record>
+        
+        <record id="action_leave_approved" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_student_leave"/>
+            <field name="name">approve</field>
+            <field name="kind">function</field>
+            <field name="action">write({'state':'approve'})</field>
+        </record>
+        
+        <record id="action_leave_cancel" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_student_leave"/>
+            <field name="name">cancel</field>
+            <field name="kind">function</field>
+            <field name="action">write({'state':'cancel'})</field>
+        </record>
+        
+        <!-- Transtitions -->
+        
+        <record id="workflow_transition_reqested" model="workflow.transition">
+            <field name="act_from" ref="act_draft"/>
+            <field name="act_to" ref="action_leave_req"/>
+            <field name="signal">request_for_req</field>
+        </record>
+        
+        <record id="workflow_transition_req_to_approve" model="workflow.transition">
+            <field name="act_from" ref="action_leave_req"/>
+            <field name="act_to" ref="action_leave_approved"/>
+            <field name="signal">request_for_approve</field>
+        </record>
+        
+        <record id="workflow_transition_req_to_cancel" model="workflow.transition">
+            <field name="act_from" ref="action_leave_req"/>
+            <field name="act_to" ref="action_leave_cancel"/>
+            <field name="signal">req_cancel</field>
+        </record>
+        
+        <record id="workflow_transition_apprv_to_cancel" model="workflow.transition">
+            <field name="act_from" ref="action_leave_approved"/>
+            <field name="act_to" ref="action_leave_cancel"/>
+            <field name="signal">req_cancel</field>
+        </record>
+        
+    </data>
+</openerp>

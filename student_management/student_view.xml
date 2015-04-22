@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data>
+        <!-- Student Registration form view -->
+        <record id="student_student_form_view" model="ir.ui.view">
+            <field name="name">student.student.form.view</field>
+            <field name="model">student.student</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group colspan="4">
+                        <group colspan="2" col="1">
+                            <field name="image" widget="image" nolabel="1"/>
+                            <button name="set_student_ID" string="Approve/Generate ID" type="object" icon="gtk-go-forward" states="process"/>
+                        </group>
+                        <newline/>
+                        <group colspan="4" col="4">
+                            <field name="sequence" readonly="1" attrs="{'invisible':[('state','=','cancel')]}"/>
+                            <field name="registration_date" attrs="{'readonly':[('state','in',('approve','cancel'))]}"/>
+                            <field name="name" attrs="{'readonly':[('state','in',('approve','cancel'))]}" />
+                            <field name="lname" attrs="{'readonly':[('state','in',('approve','cancel'))]}"/>
+                            <field name="dob" attrs="{'required':[('state','=','process')]}"/>
+                            <field name="email" attrs="{'required':[('state','=','process')]}"/>
+                            <field name="contact"/>
+                            <field name="phone"/>
+                            <field name="stream_id" required="1"/>
+                            <field name="year_id"/>
+                            
+                            <field name="gender"/>
+                            <field name="leader_id" on_change="get_leader_email(leader_id)" domain="[('customer','=',True)]"/>
+                            <field name="leader_email"/>
+                            <field name="is_customer"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Reference Data">
+                            <separator string="References" colspan="4"/>
+                            <field name="ref_ids" nolabel="1" colspan="4">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="contact"/>
+                                    <field name="email"/>
+                                </tree>
+                                <form>
+                                    <field name="name"/>
+                                    <field name="contact"/>
+                                    <field name="email"/>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Personal Detail">
+                            <field name="degree_ids" nolabel="1" colspan="4">
+                                <tree editable="top">
+                                    <field name="name"/>
+                                    <field name="year_id" string="Passing Year"/>
+                                    <field name="stream_id" />
+                                    <field name="percentage"/>
+                                    <field name="status"/>
+                                </tree>
+                            </field>
+                            <separator string="Languages Known" colspan="4"/>
+                            <field name="language_ids" colspan="4" nolabel="1"/>
+                            <separator string="Hobbies" colspan="4"/>
+                            <field name="hobbies_ids" colspan="4" nolabel="1"/>
+                        </page>
+                    </notebook>
+                    <separator string="Comment" colspan="4"/>
+                    <field name="comment" nolabel="1" colspan="4" invisible="1"/>
+                   <group>
+                    <button name="set_in_process" states="draft" type="object" string="Register"/>
+                    <!-- <button name="set_to_approve" states="process" type="object" string="Approve/"/> -->
+                    <button name="set_to_cancel" states="process,approve" type="object" string="Rejected"/>
+                       <field name="state" widget="statusbar" statusbar_visible="draft,process,approve" statusbar_colors='{"draft":"red","process":"blue","approve":"green"}'/>
+                   </group>
+                </form>
+            </field> 
+        </record>
+        
+        <!-- Student Registation tree view-->
+        <record id="student_student_tree_view" model="ir.ui.view">
+            <field name="name">student.student.tree.view</field>
+            <field name="model">student.student</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree colors="red:state in ('draft','cancel');blue:state=='process';green:state=='approve';">
+                    <field name="sequence"/>
+                    <field name="name"/>
+                    <field name="lname"/>
+                    <field name="registration_date"/>
+                    <field name="email"/>
+                    <field name="contact"/>
+                    <field name="dob"/> 
+                    <field name="gender" />
+                    <field name="year_id"/>
+                    <field name="stream_id"/>
+                    <field name="leader_id"/>
+                    <field name="state"/>
+                </tree>
+            </field> 
+        </record> 
+        
+        <record id="student_student_search_view" model="ir.ui.view">
+            <field name="name">student.student.search.view</field>
+            <field name="model">student.student</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="lname"/>
+                    <newline/>
+                    <group string="Group By...">
+                        <filter name="student_year" string="Year" context="{'group_by':'year_id'}"/>
+                        <filter name="student_stream" string="Stream" context="{'group_by':'stream_id'}"/>
+                    </group>
+                </search>
+            </field> 
+        </record>
+        
+        <!-- Action for student registration -->
+        <record id="action_student_tree_view" model="ir.actions.act_window">
+            <field name="name">Student Registration</field>
+            <field name="res_model">student.student</field>
+            <field name="view_id" ref="student_student_tree_view"/>
+        </record>       
+        
+        <!-- Menuitem for student Management -->
+        <menuitem id="main_school_menu" name="Student Management" sequence="1"/>
+        <menuitem id="student_regi_menu" parent="main_school_menu"
+            action="action_student_tree_view"  sequence="1"/>
+            
+        <!-- Configurations Menus-->
+        
+        <menuitem id="main_configuration_id" parent="main_school_menu" name="Configuration" sequence="100"/>
+        
+        <!-- year form view-->
+        <record id="year_form_view" model="ir.ui.view">
+            <field name="name">year.year.form.view</field>
+            <field name="model">year.year</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form>
+                    <field name="name"/>
+                    <field name="code"/>
+                </form>
+            </field> 
+        </record> 
+        
+        <!-- year Tree view-->
+        <record id="year_tree_view" model="ir.ui.view">
+            <field name="name">year.year.tree.view</field>
+            <field name="model">year.year</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="code"/>
+                </tree>
+            </field> 
+        </record> 
+        
+        <!-- Action for year Model -->
+        
+        <!-- Action for student registration -->
+        <record id="action_year_id" model="ir.actions.act_window">
+            <field name="name">Year</field>
+            <field name="res_model">year.year</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+        <!-- Menuitem for Year -->
+        <menuitem id="menu_year_id" action="action_year_id" parent="main_configuration_id"/>
+         
+         
+        <!--Action for Stream Model -->
+        <record id="action_stream_id" model="ir.actions.act_window">
+            <field name="name">Stream</field>
+            <field name="res_model">stream.stream</field>
+        </record>
+        
+        <!-- Menuitem for Stream -->
+        <menuitem id="menu_stream_id" action="action_stream_id" parent="main_configuration_id"/>
+        
+        <act_window id="action_result_list"
+            key2="client_print_multi"
+            name="Result Details"
+            res_model="student.result"
+            src_model="student.student"
+            view_mode="tree" view_type="form"
+            domain="[('student_id','=',active_id)]" />
+            
+    </data>
+</openerp>

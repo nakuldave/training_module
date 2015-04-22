@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    
+    <data>
+        
+        <!-- Form view for student range summary -->
+        <record id="student_range_summary_form" model="ir.ui.view">
+            <field name="name">student.range.summary.form</field>
+            <field name="model">student.range.summary</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group colspan="4">
+                        <separator string="Enter Date Range of Student Registration form" colspan="4"/>
+                        <field name="date_from"/>
+                        <field name="date_to" />
+                    </group>
+                    <button name="get_print" string="Print" type="object" />
+                    <button special="cancel" string="Cancel"/>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Action for student result summary-->
+        <record id="action_student_range_summary" model="ir.actions.act_window">
+            <field name="name">Student Report</field>
+            <field name="res_model">student.range.summary</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>    
+        
+        <!-- Menuitems for Reports-->
+        <menuitem id="student_range_summary_menu" parent="main_report_menu_id" action="action_student_range_summary"/>
+        
+    </data>
+    
+</openerp>

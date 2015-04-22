@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data>
+
+         <!-- Form view of Leave Request -->
+         <record id="student_leave_form_view" model="ir.ui.view">
+            <field name="name">student.leave.form.view</field>
+            <field name="model">leave.leave</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form>
+                    <field name="name"/>
+                    <group colspan="4" col="4">
+                        <field name="sdate" on_change = "check_duration(sdate,edate)"/>
+                        <field name="edate" on_change = "check_duration(sdate,edate)"/>
+                        <field name="duration_difference"/>
+                        <field name="strm_id"/>
+                        <field name="student_id" domain="[('stream_id','=',strm_id)]"/>
+                    </group>
+                    <group colspan="4" col="4">
+                        <button name="request_for_req" states="draft" string="Request for Approval" type="workflow" icon="gtk-go-forward"/>
+                        <button name="request_for_approve" states="request" string="Approve" type="workflow" icon="gtk-go-forward"/>
+                        <button name="req_cancel" states="request,approve" string="Cancel" type="workflow" icon="gtk-go-forward"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        
+        
+         <!-- Tree view of Leave Request -->
+         <record id="student_leave_tree_view" model="ir.ui.view">
+            <field name="name">student.leave.tree.view</field>
+            <field name="model">leave.leave</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="sdate"/>
+                    <field name="edate"/>
+                    <field name="strm_id"/>
+                    <field name="student_id"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        
+        
+        <!-- Action for Leaves  -->
+         <record id="action_leave_tree_view" model="ir.actions.act_window">
+            <field name="name">Leaves</field>
+            <field name="res_model">leave.leave</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help">This action will trigger the tree view of leaves</field>
+        </record>
+        
+        <!-- Menuitem for stream-->
+        <menuitem action="action_leave_tree_view" id="leave_request_menu_id" parent="main_school_menu" sequence="3"/>
+
+    </data>
+    
+</openerp>

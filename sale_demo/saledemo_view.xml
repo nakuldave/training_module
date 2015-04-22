@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data>
+		<!-- Root Menu -->
+        <menuitem id="menu_sale_root" name="Sales Demo"/>
+        <menuitem id="menu_sale_parent" parent = "menu_sale_root" name="Sales Demo"/>
+        
+         <!-- Quotations Tree View -->
+        <record id="view_quotations_tree" model="ir.ui.view">
+            <field name = "name">sale.sale.tree</field>
+            <field name = "model">sale.sale</field>
+            <field name = "type">tree</field>
+            <field name = "arch" type = "xml"> 
+                <tree string="Sales" >
+                    <field name="name"/>
+			        <field name="customer_id"/>
+			        <field name="date"/>
+			        <field name="customer_ref"/>
+			        <field name="state"/>
+                </tree>
+           </field>
+        </record>
+
+		<!-- Quotations form view -->
+		<record id="view_quotations_form" model="ir.ui.view">
+		    <field name="name">sale.sale.form</field>
+			<field name="model">sale.sale</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="quotations" version="7.0">
+				    <header>
+	                    <button name="confirm_sale" states ="draft" type="object" string="Confirm Order" />
+	                    <field name="state" widget="statusbar"/>
+                    </header>
+				   <sheet>
+					    <group colspan="4" col="4">
+<!-- 				        <field name="sequence"/> -->
+					        <field name="name" readonly="1"/>
+					        <field name="customer_id" required="1"/>
+					        <field name="date"/>
+					        <field name="customer_ref"/>
+					    </group>
+					    <notebook>
+					            <page string="Order Lines">
+					        		<field name="order_line_ids">
+					        		    <tree editable="bottom">
+					        		        <field name="product_id" required="1" on_change="get_productdetails(product_id)"/>
+				        		         	<field name="name"/>
+				        		         	<field name="uom_id" required="1"/>
+									        <field name="unit_price" required="1"/>
+									        <field name="qty" required="1"/>
+									        <field name="sub_total"/>
+					        		    </tree>
+					        		        </field>
+					        		        <div class="oe_right">
+                                                 <label for="total" string="Total"/>
+                                            
+					        		         <div class="oe_right">
+					        		             <field name="total"/>
+					        		         </div>
+					        		         </div>
+					        	</page>
+					        </notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+        <!-- Quotations Action -->
+        <record id="quotations_action" model="ir.actions.act_window">
+            <field name = "name">Quotation order</field>
+            <field name = "res_model">sale.sale</field>
+            <field name = "view_type">form</field>
+            <field name = "view_mode">tree,form</field>
+            <field name = "domain">[('state','=',"draft")]</field>
+        </record>
+		<!-- Quotations Menu -->
+        <menuitem action="quotations_action" id="menu_quotations_action" parent="menu_sale_parent" name="Quotations"/>
+
+        
+         <!-- Saleorders Tree View -->
+        <record id="view_saleorders_tree" model="ir.ui.view">
+            <field name = "name">saleorders.tree</field>
+            <field name = "model">sale.sale</field>
+            <field name = "type">tree</field>
+            <field name = "arch" type = "xml">
+                <tree string="Saleorders" >
+                    <field name="name"/>
+			        <field name="customer_id"/>
+			        <field name="date"/>
+			        <field name="customer_ref"/>
+			        <field name="state"/>
+                </tree>
+           </field>
+        </record>
+
+		<!-- Saleorders form view -->
+		<record id="view_saleorders_form" model="ir.ui.view">
+		    <field name="name">saleorders.form</field>
+			<field name="model">sale.sale</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="saleorders" version="7.0">
+				    <header>
+	                    <button name="confirm_sale" states ="draft" type="object" string="Confirm Order" />
+	                    <field name="state" widget="statusbar"/>
+                    </header>
+				   <sheet>
+					    <group colspan="4" col="4">
+                   <!--  <field name="sequence"/> -->
+					        <field name="name" readonly="1"/>
+					        <field name="customer_id" required="1" domain="[('customer','=',True)]"/>
+					        <field name="date"/>
+					        <field name="customer_ref"/>
+					    </group>
+					    <notebook>
+					            <page string="Order Lines">
+					        		<field name="order_line_ids">
+					        		    <tree editable="bottom">
+					        		        <field name="product_id" required="1" on_change="get_productdetails(product_id)"/>
+				        		         	<field name="name"/>
+				        		         	<field name="uom_id" required="1"/>
+									        <field name="unit_price" required="1"/>
+									        <field name="qty" required="1"/>
+									        <field name="sub_total"/>
+									       
+					        		    </tree>
+					        		</field>
+					        		<div class="oe_right">
+                                          <label for="total" string="Total"/>
+                                    
+					        		<div class="oe_right">
+					        		      <field name="total"/>
+					        		</div>
+					        		</div>
+					        	</page>
+					    </notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+        <!-- salesorder Action -->
+        <record id="saleorders_action" model="ir.actions.act_window">
+            <field name = "name">sale order</field>
+            <field name = "res_model">sale.sale</field>
+            <field name = "view_type">form</field>
+            <field name = "view_mode">tree,form</field>
+            <field name = "domain">[('state','!=',"draft")]</field>
+        </record>
+		<!-- salesorder Menu -->
+        <menuitem action="saleorders_action" id="menu_saleorders_action" parent="menu_sale_parent" name="Sales Order"/>
+        
+        
+         <!-- Product Tree View -->
+        <record id="view_product_tree" model="ir.ui.view">
+            <field name = "name">productdemo.productdemo.tree</field>
+            <field name = "model">productdemo.productdemo</field>
+            <field name = "type">tree</field>
+            <field name = "arch" type = "xml">
+                <tree string="Product" >
+                    <field name="name"/>
+			        <field name="unit_price"/>
+			        <field name="uom_id"/>
+                </tree>
+           </field>
+        </record>
+        
+        <record id="view_product_form" model="ir.ui.view">
+            <field name = "name">productdemo.productdemo.form</field>
+            <field name = "model">productdemo.productdemo</field>
+            <field name = "type">tree</field>
+            <field name = "arch" type = "xml">
+                <form  string="Product" version="7.0">
+                    <sheet>
+                          <field name="image" widget="image" class="oe_avatar oe_left"/>
+                        <div class="oe_title">
+                            <div class="oe_edit_only">
+                                <label for="name" string="Product Name"/>
+                            </div>
+                            <h1>
+                                <field name="name" required="1"/>
+                            </h1>
+                            <label for="cat_id" class="oe_edit_only"/>
+                            <h2><field name="cat_id"/></h2>
+                            <div name="options" >
+                                <field name="sale_ok"/>
+                                <label for="sale_ok"/>
+                            </div>
+                        </div>
+                        <notebook>
+                            <page string="Information">
+                            <group colspan="4" col="4">
+                                <field name="product_type"/>
+                                <field name="internal_ref"/>
+                                <field name="unit_price"/>
+                                <field name="barcode"/>
+                                <field name="uom_id"/>
+                            </group>    
+                            </page>
+                            </notebook>
+                    </sheet>
+                </form>
+           </field>
+        </record>
+        
+        <!-- Product Action -->
+        <record id="product_action" model="ir.actions.act_window">
+            <field name = "name">Product</field>
+            <field name = "res_model">productdemo.productdemo</field>
+            <field name = "view_type">form</field>
+            <field name = "view_mode">tree,form</field>
+        </record>
+		<!-- Product Menu -->
+        <menuitem id="menu_product_root" parent="menu_sale_root" name="Product"/>
+        <menuitem action="product_action" id="menu_product" parent="menu_product_root" name="Product"/>
+        
+         <!-- UoM Tree View -->
+        <record id="view_uom_tree" model="ir.ui.view">
+            <field name = "name">uomdemo.uomdemo.tree</field>
+            <field name = "model">product.uomdemo</field>
+            <field name = "type">tree</field>
+            <field name = "arch" type = "xml">
+                <tree string="Unit of Measurement" >
+                    <field name="name"/>
+                    <field name="code"/>
+                </tree>
+           </field>
+        </record>
+        <!-- Uom FORM View -->
+        <record id="view_uom_form" model="ir.ui.view">
+            <field name = "name">uomdemo.uomdemo.form</field>
+            <field name = "model">product.uomdemo</field>
+            <field name = "type">tree</field>
+            <field name = "arch" type = "xml">
+                <form  string="Unit of Measurement" version="7.0">
+                    <sheet>
+                        <group>
+                            <field name="name" required="1"/>
+					        <field name="code"/>
+                        </group>
+                    </sheet>
+                </form>
+           </field>
+        </record>
+        
+        <!-- Product Action -->
+        <record id="uom_action" model="ir.actions.act_window">
+            <field name = "name">Unit of Measurement</field>
+            <field name = "res_model">product.uomdemo</field>
+            <field name = "view_type">form</field>
+            <field name = "view_mode">tree,form</field>
+        </record>
+        
+		<!-- Product Menu -->
+        <menuitem id="menu_configuration_root" parent="menu_sale_root" name="Configuration"/>
+        <menuitem action="uom_action" id="menu_uom" parent="menu_configuration_root" name="Unit of Measurement"/>
+        
+        <!-- Category Tree View -->
+        <record id="view_category_tree" model="ir.ui.view">
+            <field name = "name">productdemo.category.tree</field>
+            <field name = "model">product.demo.category</field>
+            <field name = "type">tree</field>
+            <field name = "arch" type = "xml">
+                <tree string="Category" >
+                    <field name="name"/>
+                    <field name="code"/>
+                </tree>
+           </field>
+        </record>
+        <!-- Category FORM View -->
+        <record id="view_uom_form" model="ir.ui.view">
+            <field name = "name">productdemo.category.form</field>
+            <field name = "model">product.demo.category</field>
+            <field name = "type">tree</field>
+            <field name = "arch" type = "xml">
+                <form  string="Category" version="7.0">
+                    <sheet>
+                        <group>
+                            <field name="name" required="1"/>
+					        <field name="code"/>
+                        </group>
+                    </sheet>
+                </form>
+           </field>
+        </record>
+        
+        <!-- Product Action -->
+        <record id="category_action" model="ir.actions.act_window">
+            <field name = "name">category</field>
+            <field name = "res_model">product.demo.category</field>
+            <field name = "view_type">form</field>
+            <field name = "view_mode">tree,form</field>
+        </record>
+        <!-- Menu Item Category -->
+        
+        <menuitem action="category_action" id="menu_category" parent="menu_configuration_root" name="Category"/>
+        
+    </data>
+</openerp>

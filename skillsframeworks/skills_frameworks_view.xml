@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_skillsframework_selfassess_tree" model="ir.ui.view">
+            <field name="name">skillsframework.selfassess.tree</field>
+            <field name="model">skillsframework.employeeskills</field>
+            <field name="arch" type="xml">
+                <tree string="Self Assessed Skills">
+                    <field name="employee_id"/>
+                    <field name="skillcode"/>
+<!--                    <field name="competency_id"/> -->
+                    <field name="skilllevel"/>
+                </tree>
+            </field>
+        </record>
+		
+		
+        <record id="view_skillsframework_competency_tree" model="ir.ui.view">
+            <field name="name">skillsframework.competency.tree</field>
+            <field name="model">skillsframework.competency</field>
+            <field name="arch" type="xml">
+                <tree string="Competencies">
+                    <field name="skillcode"/>
+                    <field name="skill_id"/>
+                    <field name="level"/>
+                </tree>
+            </field>
+        </record>
+		
+        <record id="view_skillsframework_skill_form" model="ir.ui.view">
+            <field name="name">skillsframework.skill.form</field>
+            <field name="model">skillsframework.skill</field>
+            <field name="arch" type="xml">
+                <form string="Skills">
+					<sheet>
+						 <group colspan="4" col="4">
+	                    <field name="code"/>
+	                    <field name="name"/>
+						<newline/>
+	                    <field name="category_id"/>
+	                    <field name="priority"/>
+						<newline/>
+	                    <field name="description" colspan="4"/>
+					</group>
+					</sheet>
+                </form>
+            </field>
+        </record>
+		
+        <record id="view_skillsframework_skill_tree" model="ir.ui.view">
+            <field name="name">skillsframework.skill.tree</field>
+            <field name="model">skillsframework.skill</field>
+            <field name="arch" type="xml">
+                <tree string="Skills">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="category_id"/>
+                </tree>
+            </field>
+        </record>
+		
+        <record id="view_skillsframework_category_tree" model="ir.ui.view">
+            <field name="name">skillsframework.category.tree</field>
+            <field name="model">skillsframework.category</field>
+            <field name="arch" type="xml">
+                <tree string="Skill Categories">
+                    <field name="name"/>
+                    <field name="framework_id"/>
+            <!--    <field name="parent_category_id"/>  -->
+					
+                </tree>
+            </field>
+        </record>
+				
+				
+        <record id="view_skillsframework_category_form" model="ir.ui.view">
+            <field name="name">skillsframework.category.form</field>
+            <field name="model">skillsframework.category</field>
+            <field name="arch" type="xml">
+                <form string="Skill Categories">
+                    <sheet>
+	                    <group colspan="4" col="4">
+                    		<field name="framework_id"/>
+							<field name="name"/>
+                    		<newline/>
+						<!-- <field name="parent_category_id"/>  -->
+							<newline/>
+							<field name="priority"/>
+                    		<field name="colour"/>
+							<newline/>
+                    		<field name="description"/>
+						</group>
+                	</sheet>
+				</form>
+            </field>
+        </record>
+		
+        <record id="view_skillsframework_framework_form" model="ir.ui.view">
+            <field name="name">skillsframework.framework.form</field>
+            <field name="model">skillsframework.framework</field>
+            <field name="arch" type="xml">
+                <form string="Frameworks">
+                    <sheet>
+	                    <group colspan="4" col="4">
+							<field name="name"/>
+							<field name="is_active"/>
+                    		<newline/>
+                    		<field name="description" colspan="4" />
+						</group>
+                	</sheet>
+				</form>
+            </field>
+        </record>
+		
+        <record model="ir.ui.view" id="hr_employee_skills_inherit">
+             <field name="name">hr.employee.form.inherit</field>
+             <field name="model">hr.employee</field>
+             <field name="inherit_id" ref="hr.view_employee_form"/>
+             <field name="arch" type="xml">
+                 <xpath expr="//notebook/page[@string='HR Settings']" position="after">
+                     <page string="Skills Assessment">
+                         <group name="Self Assessed">
+                             <field name="employeeskills_ids" readonly="1" nolabel="1"/>
+                         </group>
+                     </page>
+                 </xpath>
+             </field>
+         </record>
+		
+		
+		<record id="skillsframework_frameworks_action" model="ir.actions.act_window">
+			<field name="name">Frameworks</field>
+			<field name="res_model">skillsframework.framework</field>		
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">Create a new Framework</p>	
+			</field>
+		</record>
+		<record id="skillsframework_category_action" model="ir.actions.act_window">
+			<field name="name">Categories</field>
+			<field name="res_model">skillsframework.category</field>		
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">Create a new Skills Category</p>	
+			</field>
+		</record>
+		
+		<record id="skillsframework_skill_action" model="ir.actions.act_window">
+			<field name="name">Skills</field>
+			<field name="res_model">skillsframework.skill</field>		
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">Create a new Skill</p>	
+			</field>
+		</record>
+		
+		<record id="skillsframework_competency_action" model="ir.actions.act_window">
+			<field name="name">Competencies</field>
+			<field name="res_model">skillsframework.competency</field>		
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">Create a new Skill Competency</p>	
+			</field>
+		</record>
+		
+		<record id="skillsframework_selfassess_action" model="ir.actions.act_window">
+			<field name="name">Self Assessments</field>
+			<field name="res_model">skillsframework.employeeskills</field>		
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">Manage my Self Assessments</p>	
+			</field>
+		</record>
+		
+		<record id="skillsframework_jobroles_action" model="ir.actions.act_window">
+			<field name="name">Job Roles</field>
+			<field name="res_model">skillsframework.jobrole</field>		
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">Manage Job Roles</p>	
+			</field>
+		</record>
+		
+		<record id="skillsframework_jobrolescomps_action" model="ir.actions.act_window">
+			<field name="name">Job Roles Competencies</field>
+			<field name="res_model">skillsframework.jobcompetency</field>		
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">Manage Job Role Competencies</p>	
+			</field>
+		</record>
+        <menuitem 
+			id="parent_menu_skillsframework" 
+			parent="hr.menu_hr_root" 
+			name="Skills Frameworks" 
+			sequence="1"
+			/>		
+
+        <menuitem 
+			id="skillsframework_selfassess_menu" 
+			parent="parent_menu_skillsframework" 
+			name="My Self Assessments" 
+			sequence="1"
+			action="skillsframework_selfassess_action" 
+			/>
+			
+        <menuitem 
+			id="skillsframework_jobroles_menu" 
+			parent="parent_menu_skillsframework" 
+			name="Job Roles" 
+			sequence="10"
+			action="skillsframework_jobroles_action"
+			/>
+	
+	        <menuitem 
+				id="skillsframework_jobrolescomps_menu" 
+				parent="parent_menu_skillsframework" 
+				name="Job Role Competencies" 
+				sequence="11"
+				action="skillsframework_jobrolescomps_action"
+				/>
+	
+		
+		
+       
+			
+        <menuitem 
+			id="skillsframework_frameworks_menu" 
+			parent="parent_menu_skillsframework" 
+			name="Frameworks" 
+			sequence="21"
+			action="skillsframework_frameworks_action"
+			/>
+	
+        <menuitem 
+			id="skillsframework_category_menu" 
+			parent="parent_menu_skillsframework" 
+			name="Categories" 
+			sequence="22"
+			action="skillsframework_category_action" 
+			/>
+
+        <menuitem 
+			id="skillsframework_skill_menu" 
+			parent="parent_menu_skillsframework" 
+			name="Skills" 
+			sequence="23"
+			action="skillsframework_skill_action" 
+			/>
+		
+		        <menuitem 
+					id="skillsframework_competency_menu" 
+					parent="parent_menu_skillsframework" 
+					name="Competencies" 
+					sequence="24"
+					action="skillsframework_competency_action" 
+					/>
+		
+		
+	</data>
+</openerp>

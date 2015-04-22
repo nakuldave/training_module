@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+	<data>
+		<report id="skill_assessment_report_menu_id"
+				string="SKILLS ASSESSMENT REPORT"
+				model="hr.employee"
+				report_type="qweb-pdf"
+				name="skills_frameworks.skill_assessment_report_template_id"
+				file="skills_frameworks.skill_assessment_report_template_id"/>
+				
+				
+		<template id="external_layout_extended">
+			<!-- Multicompany -->
+			<t t-if="o and 'company_id' in o">
+				<t t-set="company" t-value="o.company_id"></t>
+			</t>
+			<t t-if="not o or not 'company_id' in o">
+				<t t-set="company" t-value="res_company"></t>
+			</t>
+
+			<t t-call="report.external_layout_header" />
+			<t t-raw="0" />
+			<t t-call="skills_frameworks.external_layout_footer_extended" />
+		</template>
+
+		<template id="external_layout_header">
+			<div class="header">
+				<div class="row">
+					<div class="col-xs-3">
+						<img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
+					</div>
+					<div class="col-xs-5 text-center">
+						<strong>SKILLS ASSESSMENT REPORT</strong>
+					</div>
+				</div>
+				<div class="row zero_min_height">
+					<div class="col-xs-12">
+						<div style="border-bottom: 1px solid black;"></div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-3">
+						<div t-field="company.partner_id" 
+							t-field-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'
+							style="border-bottom: 1px solid black;"/>
+					</div>
+				</div>
+			</div>
+		</template>
+
+		<template id="external_layout_footer_extended">
+			<div class="footer">
+				<div class="col-xs-12 text-center" style="border-top: 1px solid black;">
+					<table>
+						<tr>
+							<td>
+								<strong>Date Printed :</strong>
+							</td>
+							<td>
+								<span t-esc="time.strftime('%d/%m/%Y')"/>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>      
+		</template>
+				
+	</data>
+</openerp>
